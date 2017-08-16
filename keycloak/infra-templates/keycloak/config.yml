@@ -1,0 +1,7 @@
+name: Keycloak
+description: |
+  Keycloak MySQL Server
+version: 3.2.1
+category: Authentication
+orchestration:
+   - 'swarm'

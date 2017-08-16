@@ -1,0 +1,37 @@
+.catalog:
+  name: "Keycloak"
+  version: "3.2.1"
+  description: "Keycloak"
+  questions:
+    - variable: KEYCLOAK_USER
+      description: "User admin"
+      label: "User admin"
+      type: "string"
+      required: true
+    - variable: KEYCLOAK_PASSWORD
+      description: "Password admin"
+      label: "Password admin"
+      type: "password"
+      required: true
+    - variable: MYSQL_HOST
+      description: "MySQL Hostname"
+      label: "MySQL Hostname"
+      type: "string"
+      required: true
+    - variable: MYSQL_KEYCLOAK_USER
+      description: "MySQL Keycloak User"
+      label: "MySQL Keycloak User"
+      type: "string"
+      required: true
+    - variable: MYSQL_KEYCLOAK_Password
+      description: "MySQL Keycloak User Password"
+      label: "MySQL Keycloak User Password"
+      type: "password"
+      required: true
+    - variable: MYSQL_KEYCLOAK_DATABASE
+      description: "MySQL Keycloak Database"
+      label: "MySQL Keycloak Database"
+      type: "string"
+      required: true
+keycloak:
+  scale: 2
