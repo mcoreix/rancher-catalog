@@ -1,0 +1,50 @@
+version: '2'
+services:
+  vamp-gateway-agent:
+    image: magneticio/vamp-gateway-agent:0.9.2
+    hostname: vamp-gateway-agent
+    stdin_open: true
+    tty: true
+    command:
+    - --storeType=consul
+    - --storeConnection=consul:8500
+    - --storeKey=/vamp/gateways/haproxy/1.6
+    - --logstash=elastic:10001
+    labels:
+      io.rancher.container.pull_image: always
+      io.rancher.scheduler.global: 'true'
+  consul:
+    image: gliderlabs/consul-server
+    hostname: consul
+    stdin_open: true
+    tty: true
+    command:
+    - -server
+    - -bootstrap
+    labels:
+      io.rancher.container.pull_image: always
+  elastic:
+    image: magneticio/elastic:2.2
+    hostname: elastic
+    stdin_open: true
+    tty: true
+    labels:
+      io.rancher.container.pull_image: always
+  vamp:
+    image: magneticio/vamp:0.9.2-rancher
+    hostname: vamp
+    environment:
+      VAMP_CONTAINER_DRIVER_RANCHER_URL: ${VAMP_CONTAINER_DRIVER_RANCHER_URL}
+      VAMP_CONTAINER_DRIVER_RANCHER_USER: ${VAMP_CONTAINER_DRIVER_RANCHER_USER}
+      VAMP_CONTAINER_DRIVER_RANCHER_PASSWORD: ${VAMP_CONTAINER_DRIVER_RANCHER_PASSWORD}
+    stdin_open: true
+    tty: true
+    labels:
+      io.rancher.container.pull_image: always
+  vamp-lb:
+    image: rancher/lb-service-haproxy:v0.7.6
+    ports:
+    - 9090:9090/tcp
+    labels:
+      io.rancher.container.agent.role: environmentAdmin
+      io.rancher.container.create_agent: 'true'
